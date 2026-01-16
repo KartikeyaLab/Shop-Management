@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Shop Management</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="shortcut icon" href="icon.png" type="image/x-icon" />
+    <style>
+      :root {
+        --bg: #030407;
+        --accent: #3b82f6;
+        --card: rgba(13, 16, 23, 0.8);
+        --border: rgba(255, 255, 255, 0.08);
+        --grid-color: rgba(59, 130, 246, 0.05); /* Subtle blue for the grid */
+      }
+
+      body {
+        font-family: "Plus Jakarta Sans", sans-serif;
+        background-color: var(--bg);
+        color: #94a3b8;
+        overflow-x: hidden;
+        position: relative;
+      }
+
+      /* Grid and Vignette Layer */
+      .bg-overlay {
+        position: fixed;
+        inset: 0;
+        z-index: -1;
+        /* The Grid */
+        background-image: linear-gradient(
+            var(--grid-color) 1px,
+            transparent 1px
+          ),
+          linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
+        background-size: 40px 40px;
+        /* The Vignette */
+        mask-image: radial-gradient(
+          circle at center,
+          black 30%,
+          transparent 90%
+        );
+        -webkit-mask-image: radial-gradient(
+          circle at center,
+          black 30%,
+          transparent 90%
+        );
+      }
+
+      /* Secondary Vignette for deep corners */
+      .vignette {
+        position: fixed;
+        inset: 0;
+        z-index: -1;
+        background: radial-gradient(
+          circle at center,
+          transparent 0%,
+          rgba(3, 4, 7, 0.8) 100%
+        );
+        pointer-events: none;
+      }
+      .mono {
+        font-family: "JetBrains Mono", monospace;
+      }
+
+      /* Grainy Overlay Effect */
+      .grain {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 100%;
+        background-image: url("https://grainy-gradients.vercel.app/noise.svg");
+        opacity: 0.03;
+        pointer-events: none;
+        z-index: 50;
+      }
+
+      /* Hero Constraints - Changed to min-height for better mobile scaling */
+      .hero-container {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+      }
+
+      /* Professional Glassmorphism */
+      .glass {
+        background: var(--card);
+        backdrop-filter: blur(12px) saturate(180%);
+        -webkit-backdrop-filter: blur(12px) saturate(180%); /* Safari Support */
+        border: 1px solid var(--border);
+        box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.8);
+      }
+
+      /* Glowing CTA */
+      .glow-btn {
+        background: #fff;
+        color: #000;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+      .glow-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 30px rgba(255, 255, 255, 0.15);
+      }
+
+      @keyframes float {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-10px);
+        }
+      }
+      .float-anim {
+        animation: float 6s ease-in-out infinite;
+      }
+
+      @keyframes glow-move {
+        0% {
+          transform: translate(0, 0) scale(1);
+        }
+        25% {
+          /* Moves to the top right */
+          transform: translate(60vw, 10vh) scale(1.2);
+        }
+        50% {
+          /* Moves to the bottom right */
+          transform: translate(50vw, 60vh) scale(1);
+        }
+        75% {
+          /* Moves to the bottom left */
+          transform: translate(-10vw, 50vh) scale(1.2);
+        }
+        100% {
+          /* Returns home */
+          transform: translate(0, 0) scale(1);
+        }
+      }
+
+      .animate-glow {
+        /* Increased duration to 25s for a very slow, premium feel */
+        animation: glow-move 25s ease-in-out infinite;
+        will-change: transform;
+      }
+    </style>
+  </head>
+
+  <body class="antialiased selection:bg-blue-500/30">
+    <div class="bg-overlay" aria-hidden="true"></div>
+    <div class="vignette" aria-hidden="true"></div>
+
+    <div class="grain" aria-hidden="true"></div>
+
+    <nav class="fixed top-6 left-1/2 -translate-x-1/2 w-[90%] max-w-5xl z-50">
+      <div
+        class="glass rounded-2xl px-6 h-14 flex justify-between items-center border border-white/10 shadow-2xl"
+      >
+        <a
+          href="#"
+          class="flex items-center gap-2 hover:opacity-80 transition"
+          aria-label="Home"
+        >
+          <span
+            class="text-[13px] font-extrabold tracking-tighter text-white uppercase"
+          >
+            Shop Management
+          </span>
+        </a>
+
+        <div
+          class="hidden md:flex items-center gap-8 text-[9px] font-bold uppercase tracking-[0.2em]"
+        >
+          <a
+            href="#features"
+            class="hover:text-blue-400 transition text-slate-400"
+            >Specs</a
+          >
+          <a
+            href="#performance"
+            class="hover:text-blue-400 transition text-slate-400"
+            >Core Logic</a
+          >
+          <a
+            href="https://kartikeyalab.github.io/kartikeya"
+            class="hover:text-blue-400 transition text-slate-400"
+            >Website</a
+          >
+          <span
+            class="px-3 py-1 bg-white/5 rounded-lg border border-white/10 text-white cursor-default mono"
+          >
+            v1.0.4
+          </span>
+        </div>
+
+        <div class="md:hidden flex items-center">
+          <div class="w-1.5 h-1.5 rounded-full bg-blue-500 animate-pulse"></div>
+        </div>
+      </div>
+    </nav>
+
+    <section class="hero-container relative overflow-hidden">
+      <div
+        class="fixed top-[-10%] left-[-10%] w-[50%] h-[50%] bg-indigo-500/10 blur-[160px] rounded-full pointer-events-none animate-glow z-0"
+      ></div>
+
+      <div
+        class="flex-1 flex flex-col justify-center items-center text-center px-6 pt-32 pb-16"
+      >
+        <div
+          class="inline-flex items-center gap-2 px-3 py-1 mb-6 rounded-full border border-white/10 bg-white/5 text-[10px] font-bold uppercase tracking-widest text-slate-400"
+        >
+          <span
+            class="w-1.5 h-1.5 rounded-full bg-blue-500 animate-pulse"
+          ></span>
+          Ready for 2026
+        </div>
+
+        <h1
+          class="text-5xl md:text-8xl font-extrabold text-white tracking-tighter leading-[0.9] mb-6"
+        >
+          Shop-Management. <br />
+          <span
+            class="text-transparent bg-clip-text bg-gradient-to-b from-white to-slate-500"
+            >Works offline.</span
+          >
+        </h1>
+
+        <p class="max-w-xl text-lg text-slate-400 leading-relaxed mb-10">
+          A simple desktop app to manage shop customers and records.
+        </p>
+
+        <div class="flex flex-col sm:flex-row gap-4 items-center mb-16">
+          <a href="#" class="glow-btn px-10 py-4 rounded-xl font-bold text-sm"
+            >Download for Windows</a
+          >
+          <a
+            href="#"
+            class="px-10 py-4 rounded-xl border border-white/10 bg-white/5 text-sm font-bold text-white hover:bg-white/10 transition"
+            >View Documentation</a
+          >
+        </div>
+      </div>
+
+      <div class="w-full max-w-5xl mx-auto px-6 h-48 md:h-64 relative">
+        <div
+          class="glass w-full h-full rounded-t-[32px] border-b-0 p-4 flex flex-col gap-4"
+        >
+          <div
+            class="flex items-center justify-between border-b border-white/5 pb-3"
+          >
+            <div class="flex gap-1.5">
+              <div class="w-2.5 h-2.5 rounded-full bg-red-500/20"></div>
+              <div class="w-2.5 h-2.5 rounded-full bg-yellow-500/20"></div>
+              <div class="w-2.5 h-2.5 rounded-full bg-green-500/20"></div>
+            </div>
+            <div
+              class="text-[9px] mono text-slate-500 uppercase tracking-widest"
+            >
+              System Status: Good!
+            </div>
+          </div>
+          <div class="grid grid-cols-4 gap-4 flex-1">
+            <div
+              class="bg-blue-500/10 rounded-xl border border-blue-500/20 animate-pulse"
+            ></div>
+            <div class="bg-white/5 rounded-xl border border-white/5"></div>
+            <div class="bg-white/5 rounded-xl border border-white/5"></div>
+            <div class="bg-white/5 rounded-xl border border-white/5"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="features" class="max-w-7xl mx-auto px-6 py-32">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div
+          class="md:col-span-2 glass rounded-[32px] p-10 flex flex-col justify-between min-h-[350px]"
+        >
+          <div>
+            <h2 class="text-3xl text-white font-bold mb-4">Customer List</h2>
+            <p class="text-slate-400 max-w-md">
+              Store, search, and export customer records easily - even without
+              internet.
+            </p>
+          </div>
+          <div class="flex flex-wrap gap-3 mt-8">
+            <span
+              class="px-4 py-2 rounded-lg bg-blue-500/10 border border-blue-500/20 text-[10px] font-bold text-blue-400 mono"
+            >
+              Offline Database</span
+            >
+            <span
+              class="px-4 py-2 rounded-lg bg-white/5 border border-white/10 text-[10px] font-bold text-slate-400 mono"
+            >
+              Data Protection</span
+            >
+          </div>
+        </div>
+
+        <div
+          class="glass rounded-[32px] p-10 flex flex-col justify-center text-center"
+        >
+          <div class="text-5xl font-black text-white mb-2">
+            Fast Searc<span class="text-blue-500">h</span>
+          </div>
+          <p class="text-xs font-bold uppercase tracking-widest text-slate-500">
+            Customer details appear instantly.
+          </p>
+        </div>
+
+        <div class="glass rounded-[32px] p-8">
+          <div
+            class="w-10 h-10 rounded-full bg-blue-600/20 border border-blue-600/30 flex items-center justify-center mb-6"
+          >
+            <svg
+              class="w-5 h-5 text-blue-500"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M13 10V3L4 14h7v7l9-11h-7z"
+              />
+            </svg>
+          </div>
+          <h3 class="text-white font-bold mb-2">Works Offline</h3>
+          <p class="text-sm text-slate-500">
+            Your data stays on your computer. No internet needed.
+          </p>
+        </div>
+
+        <div
+          class="md:col-span-2 glass rounded-[32px] p-8 flex items-center justify-between"
+        >
+          <div>
+            <h3 class="text-white font-bold mb-1">Export to Excel</h3>
+            <p class="text-sm text-slate-500">
+              Download customer data anytime with one click.
+            </p>
+          </div>
+          <div
+            class="h-10 px-6 bg-white/5 rounded-full border border-white/10 flex items-center justify-center text-[10px] font-black text-white tracking-widest"
+          >
+            Export
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section
+      id="performance"
+      class="max-w-7xl mx-auto px-6 py-20 border-t border-white/5"
+    >
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-12">
+        <div class="space-y-1">
+          <p
+            class="text-[10px] font-bold text-blue-500 uppercase tracking-widest"
+          >
+            Build Weight
+          </p>
+          <p class="text-2xl text-white font-bold mono">66.7 MB</p>
+        </div>
+        <div class="space-y-1">
+          <p
+            class="text-[10px] font-bold text-blue-500 uppercase tracking-widest"
+          >
+            RAM Usage
+          </p>
+          <p class="text-2xl text-white font-bold mono">&lt; 40 MB</p>
+        </div>
+        <div class="space-y-1">
+          <p
+            class="text-[10px] font-bold text-blue-500 uppercase tracking-widest"
+          >
+            Architecture
+          </p>
+          <p class="text-2xl text-white font-bold mono">x64 Native</p>
+        </div>
+        <div class="space-y-1">
+          <p
+            class="text-[10px] font-bold text-blue-500 uppercase tracking-widest"
+          >
+            Stability
+          </p>
+          <p class="text-2xl text-white font-bold mono">99.9%</p>
+        </div>
+      </div>
+    </section>
+
+    <footer class="max-w-7xl mx-auto px-6 py-20">
+      <div
+        class="flex flex-col md:flex-row justify-between items-center gap-10 border-t border-white/5 pt-10"
+      >
+        <div class="flex items-center gap-2">
+          <span class="text-xs font-black text-white uppercase tracking-tighter"
+            >Shop Management</span
+          >
+        </div>
+        <p
+          class="text-[10px] mono text-slate-600 uppercase tracking-widest text-center"
+        >
+          Designed by kartikeyalab © <span id="year"></span>.
+        </p>
+        <div
+          class="flex gap-6 text-[10px] font-bold text-slate-500 uppercase tracking-widest"
+        >
+          <a
+            href="https://github.com/KartikeyaLab"
+            class="hover:text-white transition"
+            >Github</a
+          >
+          <a href="#" class="hover:text-white transition">Changelog</a>
+          <a
+            href="https://kartikeyalab.github.io/kartikeya"
+            class="hover:text-white transition"
+            >Website</a
+          >
+        </div>
+      </div>
+    </footer>
+    <script>
+      document.getElementById("year").textContent = new Date().getFullYear();
+    </script>
+  </body>
+</html>
