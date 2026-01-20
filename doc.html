@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Documentation - Shop Management</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+
+    <link rel="shortcut icon" href="icon.png" type="image/x-icon" />
+    <style>
+      :root {
+        --bg: #030407;
+        --accent: #3b82f6;
+        --card: rgba(13, 16, 23, 0.8);
+        --border: rgba(255, 255, 255, 0.08);
+      }
+      body {
+        font-family: "Plus Jakarta Sans", sans-serif;
+        background-color: var(--bg);
+        color: #94a3b8;
+      }
+      .glass {
+        background: var(--card);
+        backdrop-filter: blur(12px);
+        border: 1px solid var(--border);
+      }
+      .mono {
+        font-family: "JetBrains Mono", monospace;
+      }
+      pre {
+        background: #000;
+        padding: 1rem;
+        border-radius: 0.5rem;
+        border: 1px solid var(--border);
+        overflow-x: auto;
+      }
+      code {
+        color: #60a5fa;
+      }
+    </style>
+  </head>
+  <body class="antialiased">
+    <div class="flex min-h-screen">
+      <aside
+        class="fixed inset-y-0 left-0 w-64 glass border-r hidden md:block p-6"
+      >
+        <div
+          class="text-white font-extrabold tracking-tighter uppercase mb-10 text-sm"
+        >
+          Documentation
+        </div>
+        <nav class="space-y-4 text-xs font-bold uppercase tracking-widest">
+          <a href="#getting-started" class="block text-blue-400"
+            >Getting Started</a
+          >
+          <a href="#installation" class="block hover:text-white transition"
+            >Installation</a
+          >
+          <a href="#whatsapp" class="block hover:text-white transition"
+            >WhatsApp Core</a
+          >
+          <a href="#database" class="block hover:text-white transition"
+            >Data Management</a
+          >
+          <div class="pt-10">
+            <a href="index.html" class="text-slate-500 hover:text-white"
+              ><i class="fa-solid fa-arrow-left mr-2"></i> Back to Home</a
+            >
+          </div>
+        </nav>
+      </aside>
+
+      <main class="flex-1 md:ml-64 p-8 md:p-16 max-w-4xl">
+        <section id="getting-started" class="mb-16">
+          <h1 class="text-4xl font-extrabold text-white mb-6">
+            Getting Started
+          </h1>
+          <p class="text-lg leading-relaxed mb-4">
+            Shop Management is a native x64 Windows application designed for
+            jewellery businesses to maintain customer records offline with zero
+            cloud dependency.
+          </p>
+        </section>
+
+        <section id="installation" class="mb-16 border-t border-white/5 pt-10">
+          <h2 class="text-2xl font-bold text-white mb-4">Installation</h2>
+          <ol class="list-decimal list-inside space-y-4">
+            <li>
+              Download the latest <code class="mono">.exe</code> setup from the
+              home page.
+            </li>
+            <li>
+              Run the installer. If Windows SmartScreen appears, click "More
+              Info" and "Run Anyway" (as the app is currently self-signed).
+            </li>
+            <li>
+              The app will launch automatically once the installation is
+              complete.
+            </li>
+          </ol>
+        </section>
+
+        <section id="whatsapp" class="mb-16 border-t border-white/5 pt-10">
+          <h2 class="text-2xl font-bold text-white mb-4">
+            WhatsApp Core Integration
+          </h2>
+          <div class="glass p-6 rounded-2xl mb-6">
+            <p class="mb-4">
+              The app uses a built-in messaging engine to automate customer
+              outreach.
+            </p>
+            <h4 class="text-white font-bold mb-2">How to use:</h4>
+            <ul class="list-disc list-inside space-y-2 text-sm">
+              <li>Navigate to the <strong>Campaigns</strong> tab.</li>
+              <li>Select your target customer group.</li>
+              <li>
+                Use variables like <code class="mono">{name}</code> or
+                <code class="mono">{balance}</code> in your template.
+              </li>
+            </ul>
+          </div>
+        </section>
+
+        <section id="database" class="mb-16 border-t border-white/5 pt-10">
+          <h2 class="text-2xl font-bold text-white mb-4">Data & Privacy</h2>
+          <p class="mb-4">
+            Your data is stored locally using the NeDB engine. You can find your
+            database file at:
+          </p>
+          <pre class="mono text-xs">
+C:\Users\YourName\AppData\Roaming\shop-management\customers.db</pre
+          >
+          <div
+            class="mt-6 p-4 bg-blue-500/10 border border-blue-500/20 rounded-xl"
+          >
+            <p class="text-blue-400 text-sm font-bold">
+              <i class="fa-solid fa-circle-info mr-2"></i> Pro Tip: Always back
+              up this file before performing a fresh system install.
+            </p>
+          </div>
+        </section>
+
+        <footer
+          class="pt-10 border-t border-white/5 text-[10px] mono uppercase tracking-widest"
+        >
+          Last Updated: January 2026 • v1.0.4
+        </footer>
+      </main>
+    </div>
+  </body>
+</html>
