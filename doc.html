@@ -149,11 +149,43 @@ C:\Users\YourName\AppData\Roaming\shop-management\customers.db</pre
         </section>
 
         <footer
-          class="pt-10 border-t border-white/5 text-[10px] mono uppercase tracking-widest"
-        >
-          Last Updated: January 2026 • v2.0.1
-        </footer>
+          class="pt-10 border-t border-white/5 text-[10px] mono uppercase tracking-widest last-updated"
+        ></footer>
       </main>
     </div>
+
+    <script>
+      async function autoUpdateLastUpdated() {
+        const repo = "KartikeyaLab/CMS";
+        const elements = document.querySelectorAll(".last-updated");
+
+        if (elements.length === 0) return;
+
+        try {
+          const response = await fetch(
+            `https://api.github.com/repos/${repo}/releases/latest`,
+          );
+          const data = await response.json();
+
+          if (!data.tag_name || !data.published_at) return;
+
+          const date = new Date(data.published_at);
+          const formattedDate = date.toLocaleDateString("en-US", {
+            month: "long",
+            year: "numeric",
+          });
+
+          const text = `Last Updated: ${formattedDate} • ${data.tag_name}`;
+
+          elements.forEach((el) => {
+            el.textContent = text;
+          });
+        } catch (error) {
+          console.error("Failed to update last updated info:", error);
+        }
+      }
+
+      document.addEventListener("DOMContentLoaded", autoUpdateLastUpdated);
+    </script>
   </body>
 </html>

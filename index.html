@@ -383,9 +383,8 @@
             >Website</a
           >
           <span
-            class="px-3 py-1 bg-white/5 rounded-lg border border-white/10 text-white cursor-default mono"
+            class="px-3 py-1 bg-white/5 rounded-lg border border-white/10 text-white cursor-default mono version-update"
           >
-            v1.0.4
           </span>
         </div>
 
@@ -814,8 +813,32 @@
         }
       }
 
-      // Call the function on load
       updateLatestRelease();
+
+      async function autoUpdateVersions() {
+        const repo = "KartikeyaLab/CMS";
+        const versionElements = document.querySelectorAll(".version-update");
+
+        if (versionElements.length === 0) return;
+
+        try {
+          const response = await fetch(
+            `https://api.github.com/repos/${repo}/releases/latest`,
+          );
+          const data = await response.json();
+
+          if (!data.tag_name) return;
+
+          versionElements.forEach((el) => {
+            el.textContent = data.tag_name;
+          });
+        } catch (error) {
+          console.error("Failed to update versions:", error);
+          // Fallback: keep existing text
+        }
+      }
+
+      document.addEventListener("DOMContentLoaded", autoUpdateVersions);
     </script>
   </body>
 </html>
