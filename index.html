@@ -31,17 +31,14 @@
         position: relative;
       }
 
-      /* Grid and Vignette Layer */
       .bg-overlay {
         position: fixed;
         inset: 0;
         z-index: -1;
-        /* The Grid */
         background-image:
           linear-gradient(var(--grid-color) 1px, transparent 1px),
           linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
         background-size: 40px 40px;
-        /* The Vignette */
         mask-image: radial-gradient(
           circle at center,
           black 30%,
@@ -54,7 +51,6 @@
         );
       }
 
-      /* Secondary Vignette for deep corners */
       .vignette {
         position: fixed;
         inset: 0;
@@ -70,7 +66,6 @@
         font-family: "JetBrains Mono", monospace;
       }
 
-      /* Grainy Overlay Effect */
       .grain {
         position: fixed;
         top: 0;
@@ -83,14 +78,12 @@
         z-index: 50;
       }
 
-      /* Hero Constraints - Changed to min-height for better mobile scaling */
       .hero-container {
         min-height: 100vh;
         display: flex;
         flex-direction: column;
       }
 
-      /* Professional Glassmorphism */
       .glass {
         background: var(--card);
         backdrop-filter: blur(12px) saturate(180%);
@@ -99,7 +92,6 @@
         box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.8);
       }
 
-      /* Glowing CTA */
       .glow-btn {
         background: #fff;
         color: #000;
@@ -128,19 +120,15 @@
           transform: translate(0, 0) scale(1);
         }
         25% {
-          /* Moves to the top right */
           transform: translate(60vw, 10vh) scale(1.2);
         }
         50% {
-          /* Moves to the bottom right */
           transform: translate(50vw, 60vh) scale(1);
         }
         75% {
-          /* Moves to the bottom left */
           transform: translate(-10vw, 50vh) scale(1.2);
         }
         100% {
-          /* Returns home */
           transform: translate(0, 0) scale(1);
         }
       }
@@ -155,7 +143,6 @@
         border-radius: 50%;
         filter: blur(80px);
         will-change: transform, opacity;
-        /* The breathing animation */
         animation: glow-breath 10s ease-in-out infinite;
       }
 
@@ -177,15 +164,12 @@
         left: 0;
         pointer-events: none;
         z-index: 0;
-        /* We use will-change to tell the browser to optimize for movement */
         will-change: transform;
       }
-      /* --- HYPER-REALISTIC LUXURY OPENING --- */
       #splash-screen {
         position: fixed;
         inset: 0;
         z-index: 9999;
-        /* Rich Apple-style depth background */
         background: radial-gradient(circle at center, #030407 0%, #000000 100%);
         display: flex;
         flex-direction: column;
@@ -196,7 +180,6 @@
           visibility 1.5s;
       }
 
-      /* The soft glow behind the logo */
       .splash-logo-container::before {
         content: "";
         position: absolute;
@@ -223,7 +206,6 @@
       .splash-icon {
         width: 100px;
         height: 100px;
-        /* Gold-to-Platinum Metallic Gradient */
         background: linear-gradient(
           135deg,
           #f5f5f7 0%,
@@ -235,7 +217,6 @@
         place-items: center;
         font-size: 3rem;
         color: #1c1c1e;
-        /* Multi-layered shadows for 3D depth */
         box-shadow:
           0 20px 50px rgba(0, 0, 0, 0.5),
           inset 0 2px 2px rgba(255, 255, 255, 0.5),
@@ -246,7 +227,6 @@
         transform-style: preserve-3d;
       }
 
-      /* Hyper-realistic Glass Shine */
       .splash-icon::after {
         content: "";
         position: absolute;
@@ -272,12 +252,10 @@
         font-size: 0.9rem;
         opacity: 0;
         text-align: center;
-        /* Adding a slight glass-morphism to the text */
         text-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
         animation: fadeInUp 1.5s cubic-bezier(0.16, 1, 0.3, 1) 0.8s forwards;
       }
 
-      /* NEW ANIMATIONS */
 
       @keyframes pulseAura {
         0%,
@@ -318,13 +296,13 @@
         from {
           opacity: 0;
           transform: translateY(30px);
-          letter-spacing: 1.2em; /* Extreme wide start */
+          letter-spacing: 1.2em; 
           filter: blur(10px);
         }
         to {
           opacity: 1;
           transform: translateY(0);
-          letter-spacing: 0.5em; /* Professional settle */
+          letter-spacing: 0.5em; 
           filter: blur(0px);
         }
       }
@@ -332,6 +310,7 @@
   </head>
 
   <body class="antialiased selection:bg-blue-500/30">
+
     <div id="splash-screen">
       <div class="splash-logo-container">
         <div class="splash-wrapper">
@@ -342,6 +321,8 @@
         <div class="splash-text">Kartikeya Lab</div>
       </div>
     </div>
+
+    
 
     <div class="bg-overlay" aria-hidden="true"></div>
     <div class="vignette" aria-hidden="true"></div>
@@ -764,27 +745,22 @@
       let glowX = 0;
       let glowY = 0;
 
-      // Update target coordinates on mouse move
       window.addEventListener("mousemove", (e) => {
         mouseX = e.clientX;
         mouseY = e.clientY;
       });
 
       function animate() {
-        // LERP logic: Current Pos + (Target - Current) * EaseFactor
-        // 0.05 creates a heavy, "fluid" lag. Higher numbers (0.1) are snappier.
         const ease = 0.05;
 
         glowX += (mouseX - glowX) * ease;
         glowY += (mouseY - glowY) * ease;
 
-        // Center the 600px div (300px offset)
         container.style.transform = `translate3d(${glowX - 300}px, ${glowY - 300}px, 0)`;
 
         requestAnimationFrame(animate);
       }
 
-      // Start the physics loop
       animate();
 
       async function updateLatestRelease() {
@@ -797,7 +773,6 @@
           );
           const data = await response.json();
 
-          // Find the .exe asset in the release
           const windowsAsset = data.assets.find((asset) =>
             asset.name.endsWith(".exe"),
           );
@@ -808,7 +783,6 @@
           }
         } catch (error) {
           console.error("Error fetching latest release:", error);
-          // Fallback: Hardcode a safe URL in case the API fails
           downloadBtn.href = `https://github.com/${repo}/releases/latest`;
         }
       }
@@ -834,7 +808,6 @@
           });
         } catch (error) {
           console.error("Failed to update versions:", error);
-          // Fallback: keep existing text
         }
       }
 
